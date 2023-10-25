@@ -25,21 +25,23 @@ class TextActivity : AppCompatActivity(), HistoryAdapter.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text)
 
-        val value = intent.getStringExtra("QRCODE")
+        var value = intent.getStringExtra("QRCODE")
         textView = findViewById<TextView>(R.id.textView)
+        if(value=="zeroScann877890321")
+            value="Ничего небыло отсканированно"
+        else{
+            sharedPreferencesNum = getSharedPreferences("Num", Context.MODE_PRIVATE)
+            Num = sharedPreferencesNum.getInt("Num", 0)
+            sharedPreferences = getSharedPreferences("$Num", Context.MODE_PRIVATE)
+            editor = sharedPreferences.edit()
+            editor.putString("$Num", value)
+            editor.apply()
+            Num += 1
+            editor = sharedPreferencesNum.edit()
+            editor.putInt("Num", Num)
+            editor.apply()
+        }
         textView.text = value
-
-        sharedPreferencesNum = getSharedPreferences("Num", Context.MODE_PRIVATE)
-        Num = sharedPreferencesNum.getInt("Num", 0)
-        sharedPreferences = getSharedPreferences("$Num", Context.MODE_PRIVATE)
-        editor = sharedPreferences.edit()
-        editor.putString("$Num", value)
-        editor.apply()
-        Num += 1
-        editor = sharedPreferencesNum.edit()
-        editor.putInt("Num", Num)
-        editor.apply()
-
         findViewById<RecyclerView>(R.id.rcView).layoutManager = LinearLayoutManager(this)
         findViewById<RecyclerView>(R.id.rcView).adapter=adapter
         var i=0
@@ -56,7 +58,8 @@ class TextActivity : AppCompatActivity(), HistoryAdapter.Listener {
         }
         findViewById<Button>(R.id.button3).setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(textView.text as String?))
-            startActivity(intent)
+            if(intent.resolveActivity(packageManager)!=null)
+                startActivity(intent)
         }
         textView.setOnLongClickListener {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

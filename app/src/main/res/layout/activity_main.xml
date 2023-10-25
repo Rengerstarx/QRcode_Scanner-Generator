@@ -53,5 +53,14 @@
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="@+id/button"
         app:layout_constraintStart_toStartOf="@+id/button" />
+
+    <Button
+        android:id="@+id/bHistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="History"
+        app:layout_constraintBottom_toTopOf="@+id/bScan"
+        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

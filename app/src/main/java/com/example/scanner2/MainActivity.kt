@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     var im: ImageView? = null
     var bGenerate: Button? = null
     var bScanner: Button? = null
+    var bHistory: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         im = findViewById(R.id.imageView)
         bGenerate = findViewById(R.id.button)
         bScanner = findViewById(R.id.bScan)
+        bHistory = findViewById(R.id.bHistory)
         bScanner?.setOnClickListener {
             startActivity(Intent(this, ScannerActivity::class.java))
         }
@@ -42,6 +44,11 @@ class MainActivity : AppCompatActivity() {
                 }.negativeButton(text = "Отмена") {
 
                 }.show()
+        }
+        bHistory?.setOnClickListener {
+            val intent = Intent(this,TextActivity::class.java)
+            intent.putExtra("QRCODE", "zeroScann877890321")
+            startActivity(intent)
         }
     }
 
